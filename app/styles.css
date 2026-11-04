@@ -28,6 +28,7 @@ h2 { font-size: 1.2rem; margin: 0 0 0.75rem; border-bottom: 2px solid var(--rule
 .controls { display: flex; flex-wrap: wrap; gap: 0.6rem 0.8rem; align-items: center; margin-bottom: 0.75rem; }
 label { font-size: 0.9rem; color: var(--muted); }
 select, button, textarea { font: inherit; color: var(--ink); border: 1px solid var(--rule); border-radius: 3px; background: #fff; padding: 0.4rem 0.6rem; }
+select { min-width: 0; max-width: 100%; }
 button { cursor: pointer; }
 button.primary { background: var(--carbon); color: #fff; border-color: var(--carbon); }
 button:focus-visible, select:focus-visible, textarea:focus-visible, .seed:focus-visible, .drilldown:focus-visible { outline: 3px solid #e3a95a; outline-offset: 1px; }

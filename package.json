@@ -1,0 +1,16 @@
+{
+  "name": "pharmaledger-synthetic-slice",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "PharmaLedger first executable synthetic slice: deterministic reconciliation of labelled synthetic dispensing fixtures against the fictional pharma-reconcile-1 rule pack. Synthetic demo data only; no 340B determinations.",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "test": "node --test \"tests/**/*.test.js\"",
+    "serve": "node scripts/serve.mjs"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}

@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self'; img-src 'self' data:; base-uri 'none'; form-action 'none'; object-src 'none'">
+  <title>PharmaLedger: a transaction evidence register (synthetic demo)</title>
+  <meta name="description" content="PharmaLedger joins each synthetic dispensing row to its site window and its supplied evidence label, and prints every finding beside the row it cites. Synthetic data, fictional rules, no 340B determinations.">
+  <link rel="icon" href="app/landing/mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="app/landing.css">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <p class="notice" role="note"><span class="notice__tag">Synthetic</span> Every row, site, member and label on this page is invented fixture data. The rule pack <code>pharma-reconcile-1</code> is fictional. Nothing here is a 340B, eligibility, compliance, savings or legal determination.</p>
+
+  <header class="masthead">
+    <a class="brand" href="#main" aria-label="PharmaLedger, top of page">
+      <img src="app/landing/mark.svg" width="32" height="32" alt="">
+      <span>PharmaLedger</span>
+    </a>
+    <nav aria-label="Sections">
+      <ul>
+        <li><a href="#exhibit">Exhibit T3</a></li>
+        <li><a href="#register">Register</a></li>
+        <li><a href="#rules">Rule pack</a></li>
+        <li><a href="#limits">Limits</a></li>
+      </ul>
+    </nav>
+    <a class="btn btn--small" href="app/">Open the workbench</a>
+  </header>
+
+  <main id="main" tabindex="-1">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero__copy">
+        <p class="eyebrow">Transaction evidence register &middot; synthetic demo</p>
+        <h1 id="hero-title">Every dispensing row, <span>joined to its site window</span> and its supplied label.</h1>
+        <p class="lede">PharmaLedger reads a fixture of dispensing transactions, follows each row to the site and the evidence record it names, and prints what the fictional rule pack finds beside the row it cites. Duplicates stay visible. Reversals keep their lineage. Raw and accepted totals are never blended.</p>
+        <div class="actions">
+          <a class="btn" href="app/">Open the workbench <span aria-hidden="true">&rarr;</span></a>
+          <a class="link" href="#exhibit">Follow one row first</a>
+        </div>
+        <p class="fineprint">Runs in your browser on bundled synthetic seeds. No uploads, no network calls, no real pharmacy data.</p>
+      </div>
+
+      <figure class="form" aria-labelledby="form-cap">
+        <div class="form__sheet" aria-hidden="true">
+          <p class="form__head"><span>FIXTURE golden</span><span>pharma-demo-1</span><span>p. 1 / 1</span></p>
+          <ol class="form__rows">
+            <li><b>T1</b> X1 M1 H1 E1 <i>2026-03-10</i> DSP <em>10</em> <em>10000</em></li>
+            <li><b>T2</b> X2 M3 H9 null <i>2026-03-11</i> DSP <em>5</em> <em>6000</em></li>
+            <li class="is-pulled"><b>T3</b> X3 M2 H2 E2 <i>2026-05-31</i> DSP <em>4</em> <em>8000</em></li>
+            <li><b>T4</b> X4 M4 H1 E3 <i>2026-04-02</i> DSP <em>3</em> <em>3000</em></li>
+            <li class="is-dup"><b>T5</b> X1 M1 H1 E1 <i>2026-03-10</i> DSP <em>10</em> <em>10000</em></li>
+            <li><b>T6</b> R1 M1 H1 E1 <i>2026-03-12</i> REV <em>10</em> <em>10000</em></li>
+          </ol>
+          <p class="form__foot"><span>6 imported</span><span>1 duplicate</span><span>5 accepted</span></p>
+        </div>
+        <figcaption id="form-cap">Fixture <code>golden</code>, six invented rows, printed as a continuous register. T3 is pulled for the exhibit below.</figcaption>
+      </figure>
+    </section>
+
+    <section class="exhibit" id="exhibit" aria-labelledby="exhibit-title">
+      <header class="section-head">
+        <p class="section-head__no">01</p>
+        <h2 id="exhibit-title">Exhibit T3: one row, three joins.</h2>
+        <p>The row names a site and an evidence record. The register follows both and shows exactly where the chain breaks. Hand-transcribed from the <code>golden</code> fixture and the engine's finding text; not live output.</p>
+      </header>
+
+      <ol class="chain">
+        <li class="stage stage--slip">
+          <p class="stage__no"><span>Stage</span> 01</p>
+          <h3>Dispensing transaction</h3>
+          <dl class="slip">
+            <div><dt>transactionId</dt><dd>T3</dd></div>
+            <div><dt>eventKey</dt><dd>X3</dd></div>
+            <div><dt>memberId</dt><dd>M2</dd></div>
+            <div class="is-join"><dt>siteId</dt><dd>H2</dd></div>
+            <div class="is-join is-join--b"><dt>evidenceId</dt><dd>E2</dd></div>
+            <div><dt>dispenseDate</dt><dd><time datetime="2026-05-31">2026-05-31</time></dd></div>
+            <div><dt>kind</dt><dd>dispense</dd></div>
+            <div><dt>quantityUnits</dt><dd>4</dd></div>
+            <div><dt>amountCents</dt><dd>8000</dd></div>
+          </dl>
+          <p class="stage__note">Fixture amount in integer cents. Not a price, saving or repayment.</p>
+        </li>
+
+        <li class="stage stage--window">
+          <p class="join" aria-hidden="true"><span>siteId</span> H2</p>
+          <p class="stage__no"><span>Stage</span> 02</p>
+          <h3>Site window, H2</h3>
+          <p class="window__range"><span>validFrom <time datetime="2026-06-01">2026-06-01</time></span><span>validThrough <time datetime="2026-12-31">2026-12-31</time></span><span>inclusive</span></p>
+
+          <svg class="year" viewBox="0 0 600 96" role="img" aria-labelledby="year-t year-d">
+            <title id="year-t">Calendar year 2026 with the H2 demo window</title>
+            <desc id="year-d">The H2 window covers 1 June to 31 December 2026. Transaction T3 is dated 31 May, one day before the window opens.</desc>
+            <rect x="20" y="34" width="560" height="22" fill="#efece2"/>
+            <rect class="year__band" x="251.7" y="34" width="328.3" height="22" fill="#286c69"/>
+            <g stroke="#6e6760" stroke-width="1">
+              <path d="M20 30v30M67.6 30v30M110.5 30v30M158.1 30v30M204.1 30v30M251.7 30v30M297.8 30v30M345.4 30v30M393 30v30M439 30v30M486.6 30v30M532.6 30v30M580 30v30"/>
+            </g>
+            <g class="year__months" fill="#6e6760" font-size="11" font-family="ui-monospace, Menlo, monospace">
+              <text x="24" y="76">J</text><text x="71.6" y="76">F</text><text x="114.5" y="76">M</text><text x="162.1" y="76">A</text><text x="208.1" y="76">M</text><text x="255.7" y="76">J</text><text x="301.8" y="76">J</text><text x="349.4" y="76">A</text><text x="397" y="76">S</text><text x="443" y="76">O</text><text x="490.6" y="76">N</text><text x="536.6" y="76">D</text>
+            </g>
+            <path class="year__t3" d="M250.9 14v46" stroke="#3c3049" stroke-width="2.5"/>
+            <circle cx="250.9" cy="14" r="5" fill="#3c3049"/>
+            <text x="240" y="18" text-anchor="end" fill="#3c3049" font-size="12" font-weight="700" font-family="ui-monospace, Menlo, monospace">T3</text>
+            <circle cx="251.3" cy="45" r="16" fill="none" stroke="#3c3049" stroke-width="1.5" stroke-dasharray="3 3"/>
+          </svg>
+
+          <svg class="loupe" viewBox="0 0 320 150" role="img" aria-labelledby="loupe-t loupe-d">
+            <title id="loupe-t">Detail: 30 May to 2 June 2026</title>
+            <desc id="loupe-d">Four day cells. T3 sits in the 31 May cell. The window shading starts at the 1 June cell. The gap is one day.</desc>
+            <rect x="10" y="40" width="300" height="56" fill="#f8f5ed" stroke="#3c3049" stroke-width="1.5"/>
+            <rect class="loupe__band" x="160" y="40" width="150" height="56" fill="#286c69"/>
+            <path d="M85 40v56M160 40v56M235 40v56" stroke="#3c3049" stroke-width="1"/>
+            <g font-family="ui-monospace, Menlo, monospace" font-size="12">
+              <text x="47.5" y="114" text-anchor="middle" fill="#6e6760">05-30</text>
+              <text x="122.5" y="114" text-anchor="middle" fill="#3c3049" font-weight="700">05-31</text>
+              <text x="197.5" y="114" text-anchor="middle" fill="#17403e" font-weight="700">06-01</text>
+              <text x="272.5" y="114" text-anchor="middle" fill="#6e6760">06-02</text>
+              <text x="166" y="72" font-size="11" fill="#f8f5ed">window opens</text>
+            </g>
+            <circle class="loupe__dot" cx="122.5" cy="68" r="9" fill="#3c3049"/>
+            <path class="loupe__gap" d="M122.5 24h75" stroke="#3c3049" stroke-width="1.5" fill="none"/>
+            <path d="M122.5 18v12M197.5 18v12" stroke="#3c3049" stroke-width="1.5"/>
+            <text x="160" y="14" text-anchor="middle" fill="#3c3049" font-size="12" font-family="ui-monospace, Menlo, monospace">1 day</text>
+            <text x="160" y="138" text-anchor="middle" fill="#6e6760" font-size="11" font-family="ui-monospace, Menlo, monospace">dispenseDate vs validFrom</text>
+          </svg>
+
+          <p class="remark"><b>SITE_OUTSIDE_DEMO_WINDOW</b> <q>dispenseDate 2026-05-31 is outside site "H2" demo window 2026-06-01..2026-12-31 (inclusive)</q></p>
+        </li>
+
+        <li class="stage stage--label">
+          <p class="join join--b" aria-hidden="true"><span>evidenceId</span> E2</p>
+          <p class="stage__no"><span>Stage</span> 03</p>
+          <h3>Supplied evidence label</h3>
+          <div class="tag">
+            <p class="tag__head">Evidence record <b>E2</b></p>
+            <dl>
+              <div><dt>memberId</dt><dd>M2 <span class="ok">matches T3</span></dd></div>
+              <div><dt>siteId</dt><dd>H2 <span class="ok">matches T3</span></dd></div>
+              <div class="tag__value"><dt>illustrativeEligibility</dt><dd>"no"</dd></div>
+            </dl>
+            <p class="tag__foot">Supplied fixture label. Recorded, not decided.</p>
+          </div>
+          <p class="remark"><b>ILLUSTRATIVE_INELIGIBLE</b> <q>supplied illustrativeEligibility for "E2" is "no" (fixture label, not a legal determination)</q></p>
+        </li>
+      </ol>
+
+      <p class="outcome"><span>Row status <b>accepted</b></span><span>Findings <b>2</b></span><span>Effect on totals <b>none</b></span><span class="outcome__def">"Accepted" means structurally included in reconciliation. It never means 340B-eligible.</span></p>
+    </section>
+
+    <section class="register" id="register" aria-labelledby="register-title">
+      <header class="section-head">
+        <p class="section-head__no">02</p>
+        <h2 id="register-title">The whole register, six rows.</h2>
+        <p>The duplicate T5 stays on the page and leaves the accepted totals. T6 reverses T1 and the lineage is printed on both rows. Findings never change a total.</p>
+      </header>
+
+      <div class="paper">
+        <table>
+          <caption>Fixture <code>golden</code>: imported rows, status, lineage and findings (synthetic)</caption>
+          <thead>
+            <tr><th scope="col">Row</th><th scope="col">Event</th><th scope="col">Member / site / evidence</th><th scope="col">Date</th><th scope="col" class="num">Units</th><th scope="col" class="num">Cents</th><th scope="col">Status</th><th scope="col">Lineage and findings</th></tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row">T1</th><td data-k="Event">X1 dispense</td><td data-k="Member / site / evidence">M1 / H1 / E1</td><td data-k="Date">2026-03-10</td><td data-k="Units" class="num">10</td><td data-k="Cents" class="num">10000</td><td data-k="Status"><span class="st st--rev">reversed</span></td><td data-k="Lineage">reversed by T6; no findings</td></tr>
+            <tr><th scope="row">T2</th><td data-k="Event">X2 dispense</td><td data-k="Member / site / evidence">M3 / H9 / none</td><td data-k="Date">2026-03-11</td><td data-k="Units" class="num">5</td><td data-k="Cents" class="num">6000</td><td data-k="Status"><span class="st">accepted</span></td><td data-k="Findings"><code>UNKNOWN_SITE</code> <code>MISSING_EVIDENCE</code></td></tr>
+            <tr class="is-pulled"><th scope="row"><a href="#exhibit">T3</a></th><td data-k="Event">X3 dispense</td><td data-k="Member / site / evidence">M2 / H2 / E2</td><td data-k="Date">2026-05-31</td><td data-k="Units" class="num">4</td><td data-k="Cents" class="num">8000</td><td data-k="Status"><span class="st">accepted</span></td><td data-k="Findings"><code>SITE_OUTSIDE_DEMO_WINDOW</code> <code>ILLUSTRATIVE_INELIGIBLE</code></td></tr>
+            <tr><th scope="row">T4</th><td data-k="Event">X4 dispense</td><td data-k="Member / site / evidence">M4 / H1 / E3</td><td data-k="Date">2026-04-02</td><td data-k="Units" class="num">3</td><td data-k="Cents" class="num">3000</td><td data-k="Status"><span class="st">accepted</span></td><td data-k="Findings"><code>EVIDENCE_MEMBER_MISMATCH</code> <code>ELIGIBILITY_UNRESOLVED</code></td></tr>
+            <tr class="is-dup"><th scope="row">T5</th><td data-k="Event">X1 dispense</td><td data-k="Member / site / evidence">M1 / H1 / E1</td><td data-k="Date">2026-03-10</td><td data-k="Units" class="num">10</td><td data-k="Cents" class="num">10000</td><td data-k="Status"><span class="st st--dup">duplicate</span></td><td data-k="Lineage">duplicate of T1, excluded; <code>DUPLICATE_EVENT</code></td></tr>
+            <tr><th scope="row">T6</th><td data-k="Event">R1 reversal</td><td data-k="Member / site / evidence">M1 / H1 / E1</td><td data-k="Date">2026-03-12</td><td data-k="Units" class="num">10</td><td data-k="Cents" class="num">10000</td><td data-k="Status"><span class="st">accepted</span></td><td data-k="Lineage">reverses T1; no findings</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="totals">
+        <div class="totals__col">
+          <h3>Raw, all six rows</h3>
+          <dl>
+            <div><dt>Signed cents</dt><dd>27000</dd></div>
+            <div><dt>Net units</dt><dd>22</dd></div>
+          </dl>
+        </div>
+        <div class="totals__col totals__col--acc">
+          <h3>Accepted, after deduplication</h3>
+          <dl>
+            <div><dt>Gross dispense cents</dt><dd>27000</dd></div>
+            <div><dt>Reversal cents</dt><dd>&minus;10000</dd></div>
+            <div class="totals__net"><dt>Net cents</dt><dd>17000</dd></div>
+            <div><dt>Units gross / reversed / net</dt><dd>22 / 10 / 12</dd></div>
+          </dl>
+        </div>
+        <p class="totals__note">Two columns on purpose: the duplicate inflates the raw figure, and the register says so instead of netting it away. 7 findings on 4 rows. All figures are fixture arithmetic.</p>
+      </div>
+    </section>
+
+    <section class="rules" id="rules" aria-labelledby="rules-title">
+      <header class="section-head">
+        <p class="section-head__no">03</p>
+        <h2 id="rules-title">Rule pack <code>pharma-reconcile-1</code>.</h2>
+        <p>Fictional and versioned. Transcribed from the demo specification, not from HRSA, Medicaid or manufacturer policy. The count is what each rule finds in <code>golden</code>.</p>
+      </header>
+      <ol class="rulelist">
+        <li><code>DUPLICATE_EVENT</code><p>Exact eventKey repetition flags the later lexicographic transactionIds; flagged rows stay visible but are excluded from accepted totals and from rule evaluation.</p><span>1</span></li>
+        <li><code>UNKNOWN_SITE</code><p>The transaction siteId is absent from the supplied site list. No registration is guessed.</p><span>1</span></li>
+        <li><code>SITE_OUTSIDE_DEMO_WINDOW</code><p>The site exists but dispenseDate falls outside its inclusive validFrom..validThrough demo window.</p><span>1</span></li>
+        <li><code>MISSING_EVIDENCE</code><p>evidenceId is null. Unresolved, never automatically ineligible.</p><span>1</span></li>
+        <li><code>EVIDENCE_MEMBER_MISMATCH</code><p>Linked evidence memberId differs from the transaction memberId (exact comparison).</p><span>1</span></li>
+        <li><code>EVIDENCE_SITE_MISMATCH</code><p>Linked evidence siteId differs from the transaction siteId (exact comparison).</p><span>0</span></li>
+        <li><code>ILLUSTRATIVE_INELIGIBLE</code><p>Supplied illustrativeEligibility is "no". A fixture label, not a legal determination.</p><span>1</span></li>
+        <li><code>ELIGIBILITY_UNRESOLVED</code><p>Supplied illustrativeEligibility is "unknown". Remains unresolved.</p><span>1</span></li>
+      </ol>
+    </section>
+
+    <section class="workflow" aria-labelledby="workflow-title">
+      <header class="section-head">
+        <p class="section-head__no">04</p>
+        <h2 id="workflow-title">In the workbench.</h2>
+      </header>
+      <ol class="feed">
+        <li><b>Choose a seed.</b> Bundled synthetic fixtures only. Each is validated and rejects atomically if malformed.</li>
+        <li><b>Compare raw and accepted.</b> Side by side, in integer cents and units.</li>
+        <li><b>Trace lineage.</b> T5's duplicate link and T6's reversal, row by row.</li>
+        <li><b>Work the findings.</b> Filter by rule, status or decision, then open the cited transaction, evidence, site window and rule text.</li>
+        <li><b>Record a decision.</b> Notes sit in a separate layer and never edit the source report.</li>
+        <li><b>Export.</b> JSON with rule version and a SHA-256 of the input, or a formula-safe CSV of findings.</li>
+      </ol>
+    </section>
+
+    <section class="limits" id="limits" aria-labelledby="limits-title">
+      <header class="section-head">
+        <p class="section-head__no">05</p>
+        <h2 id="limits-title">What it cannot tell you.</h2>
+      </header>
+      <ul class="limits__list">
+        <li>Whether a patient, site or claim is 340B-eligible.</li>
+        <li>Whether a duplicate discount occurred. No Medicaid inference exists in this slice.</li>
+        <li>Anything about savings, repayment, purchasing or compliance.</li>
+        <li>Anything about real data. There is no file import; the seeds are invented.</li>
+      </ul>
+      <p>It reconciles configured synthetic relationships and shows its work. Any real use would need independently sourced rules and qualified human review.</p>
+    </section>
+
+    <section class="close" aria-labelledby="close-title">
+      <h2 id="close-title">Run the register yourself.</h2>
+      <p>Choose the "Golden" seed, open T3, and check every figure on this page against the engine.</p>
+      <a class="btn btn--light" href="app/">Open the workbench <span aria-hidden="true">&rarr;</span></a>
+    </section>
+  </main>
+
+  <footer class="colophon">
+    <p><b>PharmaLedger</b> synthetic slice. Data: fixture <code>golden</code> in <code>fixtures/index.js</code>, hand-transcribed here. Rules: fictional <code>pharma-reconcile-1</code>. No customers, no real medication, no real sites, no authority.</p>
+    <p>Static page: no scripts, no external fonts, no trackers.</p>
+  </footer>
+</body>
+</html>

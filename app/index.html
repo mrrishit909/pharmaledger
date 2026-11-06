@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'">
+  <title>PharmaLedger synthetic reconciliation workbench</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <p class="banner" role="note">SYNTHETIC DEMO DATA. Fictional rule pack <code>pharma-reconcile-1</code>. Nothing here is a 340B eligibility, compliance, savings or repayment determination.</p>
+
+  <header class="masthead">
+    <p class="eyebrow">PharmaLedger · first executable synthetic slice</p>
+    <h1>Reconciliation ledger: raw rows versus accepted rows</h1>
+    <p class="lede">Load a labelled synthetic fixture, run the deterministic <code>pharma-reconcile-1</code> rule pack from <code>src/</code>, compare raw and accepted figures, inspect duplicate and reversal lineage, review findings, and export the reconciled ledger. Everything runs locally on this page; no uploads, no external calls.</p>
+  </header>
+
+  <main>
+    <section class="panel" aria-labelledby="load-heading">
+      <h2 id="load-heading">1. Choose a synthetic seed</h2>
+      <div class="controls">
+        <label for="fixture-select">Synthetic seed</label>
+        <select id="fixture-select"></select>
+        <button id="run" type="button" class="primary">Run reconciliation</button>
+      </div>
+      <p id="input-help" class="muted">Public demo: bundled, labelled synthetic fixtures only. No file import, no paste, nothing leaves this page. Each seed is validated against <code>pharma-demo-1</code> and rejects atomically if invalid.</p>
+      <details>
+        <summary>Seed contents (read-only JSON)</summary>
+        <pre id="seed-preview" class="seed" tabindex="0" aria-label="Selected seed JSON, read-only"></pre>
+      </details>
+      <div id="messages" class="messages" role="status" aria-live="polite"></div>
+    </section>
+
+    <section class="panel" id="totals-panel" hidden aria-labelledby="totals-heading">
+      <h2 id="totals-heading">2. Raw versus accepted figures</h2>
+      <dl id="cards" class="cards" aria-label="Headline figures"></dl>
+      <p class="muted" id="totals-unit"></p>
+      <div class="ledger" id="totals-ledger"></div>
+      <dl class="counts" id="counts"></dl>
+    </section>
+
+    <section class="panel" id="rows-panel" hidden aria-labelledby="rows-heading">
+      <h2 id="rows-heading">3. Imported rows and lineage</h2>
+      <div class="table-wrap">
+        <table id="rows-table">
+          <caption class="sr-only">Imported transactions with status, duplicate and reversal lineage</caption>
+          <thead>
+            <tr><th scope="col">ID</th><th scope="col">Event</th><th scope="col">Kind</th><th scope="col">Member</th><th scope="col">Site</th><th scope="col">Evidence</th><th scope="col">Date</th><th scope="col" class="num">Units</th><th scope="col" class="num">Cents</th><th scope="col">Status</th><th scope="col">Lineage</th><th scope="col" class="num">Findings</th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="panel" id="worklist-panel" hidden aria-labelledby="worklist-heading">
+      <h2 id="worklist-heading">4. Findings worklist and evidence drill-down</h2>
+      <div class="controls">
+        <label for="filter-rule">Rule</label>
+        <select id="filter-rule"></select>
+        <label for="filter-status">Row status</label>
+        <select id="filter-status">
+          <option value="">any</option>
+          <option value="accepted">accepted</option>
+          <option value="reversed">reversed</option>
+          <option value="duplicate">duplicate</option>
+        </select>
+        <label for="filter-decision">Decision</label>
+        <select id="filter-decision"></select>
+        <span id="filter-count" class="muted"></span>
+      </div>
+      <p id="results-state" class="state muted" hidden></p>
+      <div class="split">
+        <ol id="findings-list" class="findings" aria-label="Findings"></ol>
+        <section id="detail" class="drilldown" tabindex="-1" hidden aria-labelledby="detail-title">
+          <div class="detail-head">
+            <h3 id="detail-title">Finding detail</h3>
+            <button id="detail-close" type="button">Close (Esc)</button>
+          </div>
+          <div id="detail-body"></div>
+        </section>
+      </div>
+    </section>
+
+    <section class="panel" id="export-panel" hidden aria-labelledby="export-heading">
+      <h2 id="export-heading">5. Export</h2>
+      <p class="muted">Exports carry schema and rule versions, the rule-pack provenance, the synthetic label, a SHA-256 of the raw input text, the frozen report snapshot and your review notes and decisions. Export size is capped at 10 MiB.</p>
+      <div class="controls">
+        <button id="export-json" type="button">Download reconciled ledger (JSON)</button>
+        <button id="export-csv" type="button">Download findings (CSV, formula-safe)</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="colophon">
+    <p>Demo reconciles configured synthetic relationships only. It cannot decide patient or site eligibility, prove duplicate discounts, authorize purchasing or certify 340B compliance. "Accepted" means structurally included in reconciliation, never 340B-eligible.</p>
+  </footer>
+
+  <script type="module" src="./app.js"></script>
+</body>
+</html>
